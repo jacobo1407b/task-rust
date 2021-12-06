@@ -1,0 +1,30 @@
+version: "3"
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - /rustapi/db:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:mongo.local"
+      - "traefik.port=80"
+      - "traefik.frontend.entryPoints=http"
+      - "traefik.docker.network=mongo"
+      - "traefik.docker.network.isDefault=true"
+      - "traefik.docker.network.alias=mongo"
+      - "traefik.docker.network.aliases=mongo"
+      - "traefik.docker.network.alias.mongo=mongo"
+      - "traefik.docker.network.alias.mongo.local=mongo.local"
+      - "traefik.docker.network.alias.mongo.local.port=80"
+      - "traefik.docker.network.alias.mongo.local.frontend.rule=Host:mongo.local"
+      - "traefik.docker.network.alias.mongo.local.frontend.entryPoints=http"
+      - "traefik.docker.network.alias.mongo.local.frontend.passHostHeader=true"
+      - "traefik.docker.network.alias.mongo.local.frontend.passTLSCert=true"
+      - "traefik.docker.network.alias.mongo.local.frontend.priority=666"
+      - "traefik.docker.network.alias.mongo.local.frontend.tls.certresolver.fqdn=mongo.local"
