@@ -19,10 +19,26 @@ struct User {
     id: u64,
     username: String,
 }
-//let array_frutas = vec!["manzana", "pera", "uva"];
+#[derive(Serialize)]
+struct Dataper{
+    id: u64,
+    username: String,
+    nombre: String,
+    apellido: String,
+    email: String,
+    telefono: String,
+}
 
 pub async fn get_frut() -> Json<Value> {
-    Json(json!({ "data": 42, "message": "Hello, world!" }))
+    let datauser = Dataper{
+        id: 1,
+        username: "undefined".to_string(),
+        nombre: "jacobo".to_string(),
+        apellido: "hernandez mendieta".to_string(),
+        email: "jacobo@gmail.com".to_string(),
+        telefono: "2471313141".to_string(),
+    };
+    Json(json!({ "data": datauser, "message": "Hello, world!" }))
 }
 
 pub async fn get_frut_name() -> Json<Value> {

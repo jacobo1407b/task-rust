@@ -7,11 +7,12 @@ edition = "2021"
 # mongodb = "0.9.2"
 [dependencies]
 
+
 axum = "0.4.0"
 hyper = { version = "0.14.11", features = ["full"] }
 tokio = {version = "1.9.0", features = ["full"]}
 tower = {version = "0.4.8", features = ["full"]}
-tower-http = "0.1.1"
+tower-http = { version = "0.2.0", features = ["cors"] }
 tokio-stream = "0.1.7"
 async-session = "3.0.0"
 http = "0.2.4"
