@@ -1,3 +1,6 @@
+//dotenv
+use dotenv::dotenv;
+//server
 use axum::{
     http::Method,
     routing::{delete, get, post, put},
@@ -5,13 +8,12 @@ use axum::{
 };
 use tower_http::cors::{CorsLayer, Origin};
 mod api_task;
-
-//use axum::response::Json;
-//use rand::{thread_rng, Rng};
-//use serde::{Deserialize, Serialize};
+mod db;
 
 #[tokio::main]
 async fn main() {
+    dotenv().ok();
+    db::connect().await;
     let app = Router::new()
         .route("/", get(api_task::get_tasks))
         .route("/task/get/:id", get(api_task::get_task))
@@ -25,6 +27,7 @@ async fn main() {
                 .allow_methods(vec![Method::GET, Method::POST, Method::PUT, Method::DELETE]),
         );
     println!("{}", "Server on port 3000");
+    
     axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
         .serve(app.into_make_service())
         .await
